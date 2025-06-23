@@ -85,3 +85,18 @@
 
 ---
 
+### 선택-1. Bank Conflict가 커널 성능에 미치는 영향
+
+- Shared memory는 여러 개의 memory bank로 구성되어 있음 (보통 32개).
+- 만일 warp 내 thread 들이 서로 다른 memory bank에 접근하면 이는 모두 병렬적으로 처리되고 높은 bandwidth를 보임.
+- 하지만, 두 개 이상의 thread가 같은 memory bank에 접근하게 되면 thread들의 메모리 접근이 순차적으로 진행되고 그에 따라 memory access latency가 증가하여 커널 성능이 저하됨(Bank Conflict).
+- Padding 혹은 memory access pattern을 변경하는 것으로 bank conflict를 방지할 수 있음.
+
+---
+
+### 선택-2. 3D Vision 파이프라인(예: MVS, 3DGS)에서 Shared Memory 기반 커널의 중요성
+
+- 3D Vision 파이프라인에서는 다중 뷰 혹은 다중 샘플로부터 features 들을 수집한 후 aggregation 이나 composition을 함.
+- 이 때, 동일한 pixel에 대해 여러 뷰가 존재하게 되고 그로 인해 한 pixel에 중복 접근되며 여러 번 연산됨.
+- 만일 이 데이터가 global memory에 위치하는 경우, 낮은 memory bandwidth로 인한 병목 현상이 발생할 수 있음.
+- Shared memory를 통해 재사용되는 데이터에 효율적으로 접근하여 사용하게 되면 커널 성능이 크게 향상될 수 있기 때문에 MVS, 3DGS와 같은 3D Vision 파이프라인에서는 shared memory 기반의 커널을 사용함.
