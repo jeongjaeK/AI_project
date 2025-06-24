@@ -1,4 +1,4 @@
-# CUDA를 활용한 Tiled-based Matrix Multiplication 및 Cost Volume Aggregation
+# AI CUDA 프로그래밍 사전과제
 
 ## 개요
 본 프로젝트는 CUDA를 활용하여 Shared Memory 기반의 Tiled Matrix Multiplication 및 Cost Volume Aggregation CUDA 커널을 구현하고, 이를 통해 성능 향상을 실험하고 분석한 내용입니다.
